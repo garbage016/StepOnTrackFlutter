@@ -1,206 +1,117 @@
 import 'package:flutter/material.dart';
+import 'package:firebase_core/firebase_core.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 
-/*void main() {
-  runApp(const MyApp());
+// --- Placeholder LoginScreen ---
+// Questo widget andrebbe in ui/view/Login.dart, ma lo teniamo qui per far funzionare l'app di prova
+class LoginScreen extends StatelessWidget {
+  const LoginScreen({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    // La logica di reindirizzamento verrà gestita dal tuo AppNavigation o wrapper di autenticazione.
+    // Qui mostriamo solo il placeholder.
+
+    return Scaffold(
+      appBar: AppBar(title: const Text('Login')),
+      body: const Center(child: Text('Schermata Login (Placeholder)')),
+    );
+  }
 }
 
+// --- Placeholder HomeScreen ---
+// Questo widget andrebbe in ui/view/Home.dart
+class HomeScreen extends StatelessWidget {
+  const HomeScreen({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(title: const Text('Home')),
+      body: const Center(child: Text('Schermata Home (Placeholder)')),
+    );
+  }
+}
+
+// --- App principale con le rotte ---
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
 
-  // This widget is the root of your application.
-  @override
-  Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'Flutter Demos',
-      theme: ThemeData(
-        // This is the theme of your application.
-        //
-        // TRY THIS: Try running your application with "flutter run". You'll see
-        // the application has a purple toolbar. Then, without quitting the app,
-        // try changing the seedColor in the colorScheme below to Colors.green
-        // and then invoke "hot reload" (save your changes or press the "hot
-        // reload" button in a Flutter-supported IDE, or press "r" if you used
-        // the command line to start the app).
-        //
-        // Notice that the counter didn't reset back to zero; the application
-        // state is not lost during the reload. To reset the state, use hot
-        // restart instead.
-        //
-        // This works for code too, not just values: Most code changes can be
-        // tested with just a hot reload.
-        colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
-      ),
-      home: const MyHomePage(title: 'Flutter Demo Home Page'),
-    );
-  }
-}
-
-class MyHomePage extends StatefulWidget {
-  const MyHomePage({super.key, required this.title});
-
-  // This widget is the home page of your application. It is stateful, meaning
-  // that it has a State object (defined below) that contains fields that affect
-  // how it looks.
-
-  // This class is the configuration for the state. It holds the values (in this
-  // case the title) provided by the parent (in this case the App widget) and
-  // used by the build method of the State. Fields in a Widget subclass are
-  // always marked "final".
-
-  final String title;
-
-  @override
-  State<MyHomePage> createState() => _MyHomePageState();
-}
-
-class _MyHomePageState extends State<MyHomePage> {
-  int _counter = 0;
-
-  void _incrementCounter() {
-    setState(() {
-      // This call to setState tells the Flutter framework that something has
-      // changed in this State, which causes it to rerun the build method below
-      // so that the display can reflect the updated values. If we changed
-      // _counter without calling setState(), then the build method would not be
-      // called again, and so nothing would appear to happen.
-      _counter++;
-    });
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    // This method is rerun every time setState is called, for instance as done
-    // by the _incrementCounter method above.
-    //
-    // The Flutter framework has been optimized to make rerunning build methods
-    // fast, so that you can just rebuild anything that needs updating rather
-    // than having to individually change instances of widgets.
-    return Scaffold(
-      appBar: AppBar(
-        // TRY THIS: Try changing the color here to a specific color (to
-        // Colors.amber, perhaps?) and trigger a hot reload to see the AppBar
-        // change color while the other colors stay the same.
-        backgroundColor: Theme.of(context).colorScheme.inversePrimary,
-        // Here we take the value from the MyHomePage object that was created by
-        // the App.build method, and use it to set our appbar title.
-        title: Text(widget.title),
-      ),
-      body: Center(
-        // Center is a layout widget. It takes a single child and positions it
-        // in the middle of the parent.
-        child: Column(
-          // Column is also a layout widget. It takes a list of children and
-          // arranges them vertically. By default, it sizes itself to fit its
-          // children horizontally, and tries to be as tall as its parent.
-          //
-          // Column has various properties to control how it sizes itself and
-          // how it positions its children. Here we use mainAxisAlignment to
-          // center the children vertically; the main axis here is the vertical
-          // axis because Columns are vertical (the cross axis would be
-          // horizontal).
-          //
-          // TRY THIS: Invoke "debug painting" (choose the "Toggle Debug Paint"
-          // action in the IDE, or press "p" in the console), to see the
-          // wireframe for each widget.
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            const Text('You have pushed the button this many times:'),
-            Text(
-              '$_counter',
-              style: Theme.of(context).textTheme.headlineMedium,
-            ),
-          ],
-        ),
-      ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: _incrementCounter,
-        tooltip: 'Increment',
-        child: const Icon(Icons.add),
-      ), // This trailing comma makes auto-formatting nicer for build methods.
-    );
-  }
-}*/
-
-import 'package:firebase_core/firebase_core.dart';
-import 'package:firebase_auth/firebase_auth.dart';
-import 'package:flutter_local_notifications/flutter_local_notifications.dart';
-
-void main() async {
-  WidgetsFlutterBinding.ensureInitialized();
-  await Firebase.initializeApp();
-
-  // Crea il canale notifiche
-  await creaCanaleNotifica();
-
-  runApp(MyApp());
-}
-
-// --- Canale Notifiche ---
-final FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin =
-FlutterLocalNotificationsPlugin();
-
-Future<void> creaCanaleNotifica() async {
-  const AndroidNotificationChannel channel = AndroidNotificationChannel(
-    'percorso_channel', // ID del canale
-    'Notifiche Percorso', // Nome visibile
-    description: 'Notifiche al termine della registrazione di un percorso',
-    importance: Importance.defaultImportance,
-  );
-
-  final AndroidFlutterLocalNotificationsPlugin? androidPlugin =
-  flutterLocalNotificationsPlugin.resolvePlatformSpecificImplementation<
-      AndroidFlutterLocalNotificationsPlugin>();
-
-  await androidPlugin?.createNotificationChannel(channel);
-}
-
-// --- App principale ---
-class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'StepOnTrack',
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
-        primarySwatch: Colors.green, // VerdeForesta
+        primarySwatch: Colors.green,
+        useMaterial3: true,
       ),
-      home: LoginScreen(), // Vai direttamente al login
+      initialRoute: '/login', // Assicurati di partire dal login
       routes: {
-        '/login': (context) => LoginScreen(),
-        '/home': (context) => HomeScreen(),
+        '/login': (context) => const LoginScreen(),
+        '/home': (context) => const HomeScreen(),
+        // Qui andrebbero le altre rotte come '/register', '/percorsi', ecc.
       },
     );
   }
 }
 
-// --- Placeholder LoginScreen ---
-class LoginScreen extends StatelessWidget {
+// --- Nuovo Widget per gestire l'inizializzazione e gli errori ---
+class FirebaseInitializationWrapper extends StatelessWidget {
+  // Inizializza Firebase al momento della creazione del FutureBuilder
+  final Future<FirebaseApp> _initialization = Firebase.initializeApp();
+
+  FirebaseInitializationWrapper({super.key});
+
   @override
   Widget build(BuildContext context) {
-    // Controllo se l'utente è già loggato
-    final user = FirebaseAuth.instance.currentUser;
+    return FutureBuilder(
+      // Passa il Future di inizializzazione
+      future: _initialization,
+      builder: (context, snapshot) {
+        // 1. Controlla gli errori
+        if (snapshot.hasError) {
+          // Se l'inizializzazione fallisce, mostra una schermata di errore
+          return MaterialApp(
+            home: Scaffold(
+              body: Center(
+                child: Text("Errore Firebase: ${snapshot.error}", textDirection: TextDirection.ltr),
+              ),
+            ),
+          );
+        }
 
-    if (user != null) {
-      // Se loggato, vai subito alla home
-      Future.microtask(() => Navigator.pushReplacementNamed(context, '/home'));
-    }
+        // 2. Connessione completata
+        if (snapshot.connectionState == ConnectionState.done) {
+          // Firebase è pronto, avviamo l'app principale
+          return const MyApp();
+        }
 
-    return Scaffold(
-      appBar: AppBar(title: Text('Login')),
-      body: Center(child: Text('Schermata Login')),
+        // 3. Inizializzazione in corso (Mostra la F blu in modo elegante)
+        return const MaterialApp(
+          home: Scaffold(
+            body: Center(
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  CircularProgressIndicator(),
+                  Padding(
+                    padding: EdgeInsets.only(top: 16.0),
+                    child: Text("Caricamento Firebase...", textDirection: TextDirection.ltr),
+                  ),
+                ],
+              ),
+            ),
+          ),
+        );
+      },
     );
   }
 }
 
-// --- Placeholder HomeScreen ---
-class HomeScreen extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(title: Text('Home')),
-      body: Center(child: Text('Schermata Home')),
-    );
-  }
+// --- Funzione main() semplificata ---
+void main() {
+  WidgetsFlutterBinding.ensureInitialized();
+  // Esegue il wrapper che gestirà l'inizializzazione
+  runApp(FirebaseInitializationWrapper());
 }
-
-
