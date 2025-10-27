@@ -3,7 +3,6 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/stepontrackflutter.iml" filepath="$PROJECT_DIR$/stepontrackflutter.iml" />
-      <module fileurl="file://$PROJECT_DIR$/android/stepontrackflutter_android.iml" filepath="$PROJECT_DIR$/android/stepontrackflutter_android.iml" />
     </modules>
   </component>
 </project>

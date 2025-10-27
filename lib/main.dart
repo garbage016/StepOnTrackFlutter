@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-void main() {
+/*void main() {
   runApp(const MyApp());
 }
 
@@ -119,4 +119,88 @@ class _MyHomePageState extends State<MyHomePage> {
       ), // This trailing comma makes auto-formatting nicer for build methods.
     );
   }
+}*/
+
+import 'package:firebase_core/firebase_core.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter_local_notifications/flutter_local_notifications.dart';
+
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp();
+
+  // Crea il canale notifiche
+  await creaCanaleNotifica();
+
+  runApp(MyApp());
 }
+
+// --- Canale Notifiche ---
+final FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin =
+FlutterLocalNotificationsPlugin();
+
+Future<void> creaCanaleNotifica() async {
+  const AndroidNotificationChannel channel = AndroidNotificationChannel(
+    'percorso_channel', // ID del canale
+    'Notifiche Percorso', // Nome visibile
+    description: 'Notifiche al termine della registrazione di un percorso',
+    importance: Importance.defaultImportance,
+  );
+
+  final AndroidFlutterLocalNotificationsPlugin? androidPlugin =
+  flutterLocalNotificationsPlugin.resolvePlatformSpecificImplementation<
+      AndroidFlutterLocalNotificationsPlugin>();
+
+  await androidPlugin?.createNotificationChannel(channel);
+}
+
+// --- App principale ---
+class MyApp extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return MaterialApp(
+      title: 'StepOnTrack',
+      debugShowCheckedModeBanner: false,
+      theme: ThemeData(
+        primarySwatch: Colors.green, // VerdeForesta
+      ),
+      home: LoginScreen(), // Vai direttamente al login
+      routes: {
+        '/login': (context) => LoginScreen(),
+        '/home': (context) => HomeScreen(),
+      },
+    );
+  }
+}
+
+// --- Placeholder LoginScreen ---
+class LoginScreen extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    // Controllo se l'utente è già loggato
+    final user = FirebaseAuth.instance.currentUser;
+
+    if (user != null) {
+      // Se loggato, vai subito alla home
+      Future.microtask(() => Navigator.pushReplacementNamed(context, '/home'));
+    }
+
+    return Scaffold(
+      appBar: AppBar(title: Text('Login')),
+      body: Center(child: Text('Schermata Login')),
+    );
+  }
+}
+
+// --- Placeholder HomeScreen ---
+class HomeScreen extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(title: Text('Home')),
+      body: Center(child: Text('Schermata Home')),
+    );
+  }
+}
+
+

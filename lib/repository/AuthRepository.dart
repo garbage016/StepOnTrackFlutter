@@ -1,6 +1,13 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 
+class AuthResult {
+  final bool success;
+  final String? error;
+
+  AuthResult({required this.success, this.error});
+}
+
 class AuthRepository {
   final FirebaseAuth _auth;
   final FirebaseFirestore _firestore;
@@ -9,14 +16,15 @@ class AuthRepository {
       : _auth = auth ?? FirebaseAuth.instance,
         _firestore = firestore ?? FirebaseFirestore.instance;
 
-  Future<Map<String, dynamic>> login(String email, String password) async {
+  Future<AuthResult> login(String email, String password) async {
     if (email.trim().isEmpty || password.isEmpty) {
-      return {'success': false, 'message': 'Email o password vuoti'};
+      return AuthResult(success: false, error: 'Email o password vuoti');
     }
 
     try {
-      await _auth.signInWithEmailAndPassword(email: email.trim(), password: password);
-      return {'success': true, 'message': null};
+      await _auth.signInWithEmailAndPassword(
+          email: email.trim(), password: password);
+      return AuthResult(success: true);
     } on FirebaseAuthException catch (e) {
       String errorMessage;
       if (e.code == 'user-not-found') {
@@ -26,25 +34,24 @@ class AuthRepository {
       } else {
         errorMessage = e.message ?? "Errore sconosciuto";
       }
-      return {'success': false, 'message': errorMessage};
+      return AuthResult(success: false, error: errorMessage);
     } catch (e) {
-      return {'success': false, 'message': e.toString()};
+      return AuthResult(success: false, error: e.toString());
     }
   }
 
-  Future<Map<String, dynamic>> register(String email, String password) async {
+  Future<AuthResult> register(String email, String password) async {
     try {
       await _auth.createUserWithEmailAndPassword(email: email, password: password);
-      return {'success': true, 'message': null};
+      return AuthResult(success: true);
     } on FirebaseAuthException catch (e) {
-      return {'success': false, 'message': e.message};
+      return AuthResult(success: false, error: e.message);
     } catch (e) {
-      return {'success': false, 'message': e.toString()};
+      return AuthResult(success: false, error: e.toString());
     }
   }
 
   Future<void> saveUserData({
-    required String userId,
     required String nome,
     required String cognome,
     required String username,
@@ -78,7 +85,5 @@ class AuthRepository {
     await _auth.signOut();
   }
 
-  User? currentUser() {
-    return _auth.currentUser;
-  }
+  User? currentUser() => _auth.currentUser;
 }
