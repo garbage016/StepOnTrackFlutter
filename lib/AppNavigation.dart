@@ -37,7 +37,7 @@ class AppNavigation extends StatelessWidget {
           case 'mappa':
             final id = uri.pathSegments.length > 1 ? uri.pathSegments[1] : '';
             return MaterialPageRoute(
-              builder: (context) => MappaScreen(percorsoId: id),
+              builder: (context) => MappaScreen(),
             );
 
           case 'riepilogo':

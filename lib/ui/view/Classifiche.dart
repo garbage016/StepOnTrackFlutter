@@ -5,8 +5,8 @@ import 'package:stepontrackflutter/ui/view/Card.dart';
 import 'package:stepontrackflutter/ui/view/MyBottomNavigationBar.dart';
 import 'package:stepontrackflutter/ui/view/MyTopAppBar.dart';
 
-class ClassifichePercorsiScreen extends StatelessWidget {
-  const ClassifichePercorsiScreen({super.key});
+class ClassificheScreen extends StatelessWidget {
+  const ClassificheScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
