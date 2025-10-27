@@ -1,3 +1,16 @@
+
+buildscript {
+    repositories {
+        google()
+        mavenCentral()
+    }
+    dependencies {
+        // Usa la tua versione di Gradle Plugin se la conosci, altrimenti usa un default
+        classpath("com.android.tools.build:gradle:7.3.0")
+        // **RIGA FONDAMENTALE PER FIREBASE**
+        //classpath("com.google.gms:google-services:4.4.1")
+    }
+}
 allprojects {
     repositories {
         google()

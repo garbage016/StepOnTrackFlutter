@@ -1,4 +1,4 @@
-import 'package:flutter/material.dart';
+/*import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
@@ -114,4 +114,28 @@ void main() {
   WidgetsFlutterBinding.ensureInitialized();
   // Esegue il wrapper che gestirà l'inizializzazione
   runApp(FirebaseInitializationWrapper());
+}*/
+import 'package:flutter/material.dart';
+import 'AppNavigation.dart'; // importa il file dove hai AppNavigation
+import 'ui/view/Home.dart'; // importa la schermata Home
+
+
+void main() {
+  WidgetsFlutterBinding.ensureInitialized();
+  runApp(const AppTestWrapper());
 }
+
+class AppTestWrapper extends StatelessWidget {
+  const AppTestWrapper({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    // avvio dalla home, bypassando il login e Firebase
+    return MaterialApp(
+      debugShowCheckedModeBanner: false,
+      title: 'StepOnTrack (Test Mode)',
+      home: const HomeScreen(), // parte direttamente dalla home
+    );
+  }
+}
+

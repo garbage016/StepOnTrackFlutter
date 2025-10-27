@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:stepontrackflutter/ui/view/MyTopAppBar.dart';
 import 'package:url_launcher/url_launcher.dart';
+
+import 'MyBottomNavigationBar.dart';
 
 class HomeScreen extends StatelessWidget {
   const HomeScreen({super.key});
@@ -12,10 +15,19 @@ class HomeScreen extends StatelessWidget {
     );
 
     return Scaffold(
-      appBar: AppBar(
-        title: const Text("StepOnTrack"),
-        backgroundColor: Colors.green,
+      appBar: MyTopBar(
+        title: "StepOnTrack"),
+      bottomNavigationBar: MyBottomNavigationBar(
+        currentIndex: 0, // o l'indice corrente della pagina
+        onTap: (index) {
+          // Navigazione tra le pagine
+          // Navigator.pushNamed(context, items[index].route); // se usi named routes
+        },
+        onFabTap: () {
+          // Azione del FAB centrale
+        },
       ),
+
       body: Stack(
         children: [
           ListView(
@@ -38,11 +50,11 @@ class HomeScreen extends StatelessWidget {
                 height: 180,
                 child: PageView(
                   children: [
-                    Image.asset("assets/weather_sunny.png", fit: BoxFit.cover),
-                    Image.asset("assets/weather_rainy.png", fit: BoxFit.cover),
-                    Image.asset("assets/weather_cloudy.png", fit: BoxFit.cover),
-                    Image.asset("assets/weather_snow.png", fit: BoxFit.cover),
-                    Image.asset("assets/weather_windy.png", fit: BoxFit.cover),
+                    Image.asset("assets/weather_sunny.jpg", fit: BoxFit.cover),
+                    Image.asset("assets/weather_rainy.jpg", fit: BoxFit.cover),
+                    Image.asset("assets/weather_cloudy.jpg", fit: BoxFit.cover),
+                    Image.asset("assets/weather_snow.jpg", fit: BoxFit.cover),
+                    Image.asset("assets/weather_windy.jpg", fit: BoxFit.cover),
                   ],
                 ),
               ),
@@ -86,7 +98,7 @@ class HomeScreen extends StatelessWidget {
               ),
               const SizedBox(height: 12),
               Image.asset(
-                "assets/sirolo.png",
+                "assets/sirolo.jpg",
                 height: 200,
                 fit: BoxFit.cover,
               ),
