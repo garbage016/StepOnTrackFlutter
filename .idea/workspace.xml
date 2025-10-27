@@ -4,31 +4,26 @@
     <option name="autoReloadType" value="NONE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="6c614911-17a6-4a5f-855c-dc524559656f" name="Changes" comment="file">
+    <list default="true" id="6c614911-17a6-4a5f-855c-dc524559656f" name="Changes" comment="prime conversioni">
       <change beforePath="$PROJECT_DIR$/.dart_tool/package_config.json" beforeDir="false" afterPath="$PROJECT_DIR$/.dart_tool/package_config.json" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.dart_tool/package_graph.json" beforeDir="false" afterPath="$PROJECT_DIR$/.dart_tool/package_graph.json" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.flutter-plugins-dependencies" beforeDir="false" afterPath="$PROJECT_DIR$/.flutter-plugins-dependencies" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Dart_SDK.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/libraries/Dart_SDK.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/modules.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/modules.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/vcs.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/lib/AppNavigation.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/AppNavigation.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/main.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/main.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/repository/AuthRepository.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/repository/AuthRepository.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/ui/view/Login.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/ui/view/Login.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/ui/view/MyBottomNavigationBar.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/ui/view/MyBottomNavigationBar.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/ui/view/MyTopAppBar.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/ui/view/MyTopAppBar.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/ui/view/Register.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/ui/view/Register.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/ui/view/SOSButton.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/ui/view/SOSButton.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/viewModels/AuthViewModel.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/viewModels/AuthViewModel.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/linux/flutter/generated_plugin_registrant.cc" beforeDir="false" afterPath="$PROJECT_DIR$/linux/flutter/generated_plugin_registrant.cc" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/linux/flutter/generated_plugins.cmake" beforeDir="false" afterPath="$PROJECT_DIR$/linux/flutter/generated_plugins.cmake" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/ui/view/Classifiche.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/ui/view/Classifiche.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/ui/view/Crea.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/ui/view/Crea.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/ui/view/DettaglioPercorso.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/ui/view/DettaglioPercorso.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/ui/view/DropdownMenuBox.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/ui/view/Card.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/ui/view/Home.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/ui/view/Home.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/ui/view/Percorsi.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/ui/view/Percorsi.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/ui/view/Utente.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/ui/view/Utente.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/viewModels/ClassificheViewModel.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/viewModels/ClassificheViewModel.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/viewModels/PercorsoViewModel.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/viewModels/PercorsoViewModel.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/viewModels/ProfiloViewModel.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/viewModels/ProfiloViewModel.dart" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/macos/Flutter/GeneratedPluginRegistrant.swift" beforeDir="false" afterPath="$PROJECT_DIR$/macos/Flutter/GeneratedPluginRegistrant.swift" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/pubspec.lock" beforeDir="false" afterPath="$PROJECT_DIR$/pubspec.lock" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/pubspec.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/pubspec.yaml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/windows/flutter/generated_plugin_registrant.cc" beforeDir="false" afterPath="$PROJECT_DIR$/windows/flutter/generated_plugin_registrant.cc" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/windows/flutter/generated_plugins.cmake" beforeDir="false" afterPath="$PROJECT_DIR$/windows/flutter/generated_plugins.cmake" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/test/widget_test.dart" beforeDir="false" afterPath="$PROJECT_DIR$/test/widget_test.dart" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -37,6 +32,13 @@
   </component>
   <component name="ClangdSettings">
     <option name="formatViaClangd" value="false" />
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="Dart File" />
+      </list>
+    </option>
   </component>
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
@@ -108,7 +110,15 @@
       <option name="project" value="LOCAL" />
       <updated>1756835258833</updated>
     </task>
-    <option name="localTasksCounter" value="3" />
+    <task id="LOCAL-00003" summary="prime conversioni">
+      <option name="closed" value="true" />
+      <created>1761558540118</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1761558540118</updated>
+    </task>
+    <option name="localTasksCounter" value="4" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -125,6 +135,7 @@
   <component name="VcsManagerConfiguration">
     <MESSAGE value="prova" />
     <MESSAGE value="file" />
-    <option name="LAST_COMMIT_MESSAGE" value="file" />
+    <MESSAGE value="prime conversioni" />
+    <option name="LAST_COMMIT_MESSAGE" value="prime conversioni" />
   </component>
 </project>

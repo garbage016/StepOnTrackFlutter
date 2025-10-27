@@ -6,7 +6,7 @@ import 'ui/view/Percorsi.dart';
 import 'ui/view/Classifiche.dart';
 import 'ui/view/Crea.dart';
 import 'ui/view/mappa/Mappa.dart';
-import 'ui/view/ModificaProfilo.dart';
+import 'ui/view/Utente.dart';
 import 'ui/view/Riepilogo.dart';
 import 'ui/view/DettaglioPercorso.dart';
 import 'ui/view/mappa/MappaSeguiPercorso.dart';
@@ -17,12 +17,12 @@ class AppNavigation extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      initialRoute: '/splash',
+      initialRoute: '/login',
       routes: {
         '/login': (context) => LoginScreen(onRegisterClick: () {  }, onLoginSuccess: () {  },),
         '/register': (context) => RegistrationScreen(onBackClick: () {  }, onRegisterSuccess: () {  },),
         '/home': (context) => HomeScreen(),
-        '/percorsi': (context) => SearchScreen(),
+        '/percorsi': (context) => SearchScreen(percorsi: [],),
         '/profilo': (context) => GestioneProfiloScreen(),
         '/classifiche': (context) => ClassificheScreen(),
         '/creaPercorso': (context) => CreaPercorsoScreen(),
