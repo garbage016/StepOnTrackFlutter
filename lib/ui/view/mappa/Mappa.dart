@@ -68,33 +68,19 @@ class _MappaScreenState extends State<MappaScreen> {
         children: [
           posizioneCorrente != null
               ? OSMFlutter(
-            controller: mapController,
-            trackMyPosition: true,
-            mapOptions: MapOptions(
-              minZoomLevel: 3,
-              maxZoomLevel: 18,
-              zoomStep: 1.0,
-            ),
-            userLocationMarker: UserLocationMaker(
-              personMarker: MarkerIcon(
-                icon: Icon(
-                  Icons.my_location,
-                  color: Colors.blue,
-                  size: 48,
-                ),
-              ),
-            ),
-          )
-
-              : Center(
-            child: Column(
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                CircularProgressIndicator(),
-                SizedBox(height: 12),
-                Text("Acquisizione posizione..."),
-              ],
-            ),
+      controller: mapController,
+        trackMyPosition: true,
+        showContributorBadgeForOSM: false,
+      )
+        : Center(
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              CircularProgressIndicator(),
+              SizedBox(height: 12),
+              Text("Acquisizione posizione..."),
+            ],
+          ),
           ),
           Positioned(
             bottom: 16,

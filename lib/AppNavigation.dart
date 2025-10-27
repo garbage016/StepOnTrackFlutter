@@ -7,8 +7,8 @@ import 'ui/view/Classifiche.dart';
 import 'ui/view/Crea.dart';
 import 'ui/view/mappa/Mappa.dart';
 import 'ui/view/Utente.dart';
-import 'ui/view/Riepilogo.dart';
 import 'ui/view/DettaglioPercorso.dart';
+import 'ui/view/ModificaProfilo.dart';
 import 'ui/view/mappa/MappaSeguiPercorso.dart';
 
 class AppNavigation extends StatelessWidget {
@@ -40,13 +40,13 @@ class AppNavigation extends StatelessWidget {
               builder: (context) => MappaScreen(),
             );
 
-          case 'riepilogo':
+          /*case 'riepilogo':
             final nome = uri.pathSegments.length > 1 ? uri.pathSegments[1] : '';
             final distanza = uri.pathSegments.length > 2 ? uri.pathSegments[2] : '';
             final durata = uri.pathSegments.length > 3 ? uri.pathSegments[3] : '';
             return MaterialPageRoute(
               builder: (context) => RiepilogoScreen(nome: nome, distanza: distanza, durata: durata),
-            );
+            );*/
 
           case 'dettaglio':
             final id = uri.pathSegments.length > 1 ? uri.pathSegments[1] : '';
@@ -54,11 +54,11 @@ class AppNavigation extends StatelessWidget {
               builder: (context) => DettaglioPercorsoScreen(percorsoId: id),
             );
 
-          case 'mappaSvolgimento':
+          /*case 'mappaSvolgimento':
             final id = uri.pathSegments.length > 1 ? uri.pathSegments[1] : '';
             return MaterialPageRoute(
               builder: (context) => MappaSeguiPercorsoScreen(percorsoId: id),
-            );
+            );*/
 
           default:
             return null;
