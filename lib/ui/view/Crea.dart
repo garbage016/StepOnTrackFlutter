@@ -199,7 +199,7 @@ class _CreaPercorsoScreenState extends State<CreaPercorsoScreen> {
                     if (!campiValidi) return;
 
                     // TODO: Qui il ViewModel per salvare i dati
-                    // Navigator.pushNamed(context, "/mappa", arguments: percorsoId);
+                    Navigator.pushNamed(context, "/mappa", arguments: 0);
                   },
                   icon: const Icon(Icons.play_arrow),
                   label: const Text("Avanti"),

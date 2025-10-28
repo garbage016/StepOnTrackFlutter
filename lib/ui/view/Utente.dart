@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
+import 'package:provider/provider.dart';
+import '../../viewModels/AuthViewModel.dart';
 import 'MyTopAppBar.dart';
 import 'MyBottomNavigationBar.dart';
 
@@ -145,7 +147,13 @@ class _GestioneProfiloScreenState extends State<GestioneProfiloScreen> {
             // Logout
             ListTile(
               title: const Text('Esci'),
-              onTap: _showLogoutDialog,
+              onTap: () async {
+                final authVM = context.read<AuthViewModel>();
+                await authVM.logout();
+
+                if (!mounted) return;
+                Navigator.pushNamedAndRemoveUntil(context, '/login', (route) => false);
+              },
             ),
             const Divider(),
           ],

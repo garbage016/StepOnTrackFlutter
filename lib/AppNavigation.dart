@@ -17,9 +17,31 @@ class AppNavigation extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      initialRoute: '/home',
+      initialRoute: '/login',
       routes: {
-        '/login': (context) => LoginScreen(onRegisterClick: () {  }, onLoginSuccess: () {  },),
+        '/login': (context) => LoginScreen(
+          onRegisterClick: () {
+            // Vai alla schermata di registrazione
+            Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder: (_) => RegistrationScreen(
+                  onBackClick: () {
+                    Navigator.pop(context); // Torna indietro alla login
+                  },
+                  onRegisterSuccess: () {
+                    Navigator.pushReplacementNamed(context, '/home'); // Vai alla home
+                  },
+                ),
+              ),
+            );
+          },
+          onLoginSuccess: () {
+            // Quando il login ha successo
+            Navigator.pushReplacementNamed(context, '/home');
+          },
+        ),
+
         '/register': (context) => RegistrationScreen(onBackClick: () {  }, onRegisterSuccess: () {  },),
         '/home': (context) => HomeScreen(),
         '/percorsi': (context) => SearchScreen(percorsi: [],),

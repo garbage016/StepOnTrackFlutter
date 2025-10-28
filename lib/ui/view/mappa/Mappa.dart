@@ -19,14 +19,10 @@ class _MappaScreenState extends State<MappaScreen> {
   @override
   void initState() {
     super.initState();
-    // 1. Inizializzazione del MapController
-    mapController = MapController(
-      // Non è necessario initMapWithUserPosition o initPosition qui
-      // poiché _initLocation gestisce il centraggio.
-    );
+    mapController = MapController( initPosition: GeoPoint(latitude: 45.4642, longitude: 9.1900),);
     _initLocation();
-    _startTimer();
   }
+
 
   Future<void> _initLocation() async {
     // Aggiungo la richiesta di permesso (essenziale)
@@ -104,18 +100,14 @@ class _MappaScreenState extends State<MappaScreen> {
         children: [
           // MAPPA: Usa il parametro osmOption
           posizioneCorrente != null
-              ? OSMFlutter(
+              ?OSMFlutter(
             controller: mapController,
-            // I parametri rimossi sono stati spostati qui
             osmOption: OSMOption(
-              // trackMyPosition ora è qui, e accetta un oggetto UserTrackingOption
               userTrackingOption: const UserTrackingOption(
-                enableTracking: true,
-                unFollowUser: false, // Forziamo la mappa a seguire l'utente
+                enableTracking: true,  // centra la mappa sulla posizione dell'utente
+                unFollowUser: false,
               ),
-              showContributorBadgeForOSM: false, // Anche questo è qui
-              // Impostazioni iniziali della mappa (opzionale)
-              // Il codice _initLocation si occupa di andare alla posizione
+              showContributorBadgeForOSM: false,
             ),
           )
               : const Center(

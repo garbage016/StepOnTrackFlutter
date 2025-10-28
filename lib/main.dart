@@ -116,6 +116,7 @@ void main() {
   runApp(FirebaseInitializationWrapper());
 }*/
 import 'package:flutter/material.dart';
+import 'package:stepontrackflutter/viewModels/AuthViewModel.dart';
 import 'package:stepontrackflutter/viewModels/ClassificheViewModel.dart';
 import 'AppNavigation.dart';
 import 'package:provider/provider.dart';
@@ -129,6 +130,8 @@ void main() async {
     MultiProvider(
       providers: [
         ChangeNotifierProvider(create: (_) => ClassificheViewModel()),
+        ChangeNotifierProvider(create: (_) => AuthViewModel()),
+        ChangeNotifierProvider(create: (_) => AuthViewModel()),
         // altri provider se servono
       ],
       child: const AppTestWrapper(),
