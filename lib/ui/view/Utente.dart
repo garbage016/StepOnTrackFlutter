@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
+import 'MyTopAppBar.dart';
+import 'MyBottomNavigationBar.dart';
 
 class GestioneProfiloScreen extends StatefulWidget {
   const GestioneProfiloScreen({super.key});
@@ -10,7 +12,6 @@ class GestioneProfiloScreen extends StatefulWidget {
 
 class _GestioneProfiloScreenState extends State<GestioneProfiloScreen> {
   bool schermoAcceso = true;
-  bool showLogoutDialog = false;
 
   // Dati dummy per esempio
   final utente = {
@@ -20,18 +21,59 @@ class _GestioneProfiloScreenState extends State<GestioneProfiloScreen> {
     'dataCreazione': DateTime(2022, 1, 15)
   };
 
+  void _showLogoutDialog() {
+    showDialog(
+      context: context,
+      builder: (_) => AlertDialog(
+        title: const Text('Conferma logout'),
+        content: const Text('Sei sicuro di voler uscire dall\'app?'),
+        actions: [
+          TextButton(
+            onPressed: () {
+              Navigator.pop(context);
+              // esegui logout e naviga a login
+            },
+            child: const Text('Esci', style: TextStyle(color: Colors.orange)),
+          ),
+          TextButton(
+            onPressed: () => Navigator.pop(context),
+            child: const Text('Annulla', style: TextStyle(color: Colors.black)),
+          ),
+        ],
+      ),
+    );
+  }
+
+  void _onTapBottomNav(int index) {
+    switch (index) {
+      case 0:
+        Navigator.pushReplacementNamed(context, '/home');
+        break;
+      case 1:
+        Navigator.pushReplacementNamed(context, '/percorsi');
+        break;
+      case 2:
+        Navigator.pushReplacementNamed(context, '/classifiche');
+        break;
+      case 3:
+      // siamo già qui
+        break;
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     String formattedDate =
     DateFormat('dd/MM/yyyy').format(utente['dataCreazione'] as DateTime);
 
     return Scaffold(
-      appBar: AppBar(title: const Text('Account')),
-      bottomNavigationBar: BottomNavigationBar(
-        items: const [
-          BottomNavigationBarItem(icon: Icon(Icons.home), label: 'Home'),
-          BottomNavigationBarItem(icon: Icon(Icons.person), label: 'Profilo'),
-        ],
+      appBar: const MyTopBar(title: 'Account'),
+      bottomNavigationBar: MyBottomNavigationBar(
+        currentIndex: 3, // Profilo
+        onTap: _onTapBottomNav,
+        onFabTap: () {
+          Navigator.pushNamed(context, '/creaPercorso'); // se vuoi
+        },
       ),
       body: SingleChildScrollView(
         padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 30),
@@ -103,42 +145,12 @@ class _GestioneProfiloScreenState extends State<GestioneProfiloScreen> {
             // Logout
             ListTile(
               title: const Text('Esci'),
-              onTap: () {
-                setState(() {
-                  showLogoutDialog = true;
-                });
-              },
+              onTap: _showLogoutDialog,
             ),
             const Divider(),
           ],
         ),
       ),
-      // Dialog logout
-      floatingActionButton: showLogoutDialog
-          ? AlertDialog(
-        title: const Text('Conferma logout'),
-        content: const Text('Sei sicuro di voler uscire dall\'app?'),
-        actions: [
-          TextButton(
-            onPressed: () {
-              setState(() {
-                showLogoutDialog = false;
-                // Esegui logout e naviga a login
-              });
-            },
-            child: const Text('Esci', style: TextStyle(color: Colors.orange)),
-          ),
-          TextButton(
-            onPressed: () {
-              setState(() {
-                showLogoutDialog = false;
-              });
-            },
-            child: const Text('Annulla', style: TextStyle(color: Colors.black)),
-          ),
-        ],
-      )
-          : null,
     );
   }
 }

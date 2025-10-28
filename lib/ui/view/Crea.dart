@@ -1,3 +1,4 @@
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 
 class CreaPercorsoScreen extends StatefulWidget {
@@ -32,6 +33,11 @@ class _CreaPercorsoScreenState extends State<CreaPercorsoScreen> {
     List<String> comuni = ['Roma', 'Milano', 'Napoli', 'Torino', 'Firenze'];
     return comuni.where((c) => c.toLowerCase().contains(query.toLowerCase())).take(30).toList();
   }
+  @override
+  void initState() {
+    super.initState();
+  }
+
 
   @override
   Widget build(BuildContext context) {

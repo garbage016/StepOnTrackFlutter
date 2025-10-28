@@ -6,12 +6,18 @@ class SosButton extends StatelessWidget {
 
   const SosButton({Key? key, this.size = 65}) : super(key: key);
 
-  void _callEmergency() async {
+  void _callEmergency(BuildContext context) async {
     final Uri telUri = Uri(scheme: 'tel', path: '112');
     if (await canLaunchUrl(telUri)) {
-      await launchUrl(telUri);
+      await launchUrl(
+        telUri,
+        mode: LaunchMode.externalApplication,
+      );
+
     } else {
-      debugPrint('Impossibile avviare la chiamata');
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(content: Text('Impossibile avviare la chiamata')),
+      );
     }
   }
 
@@ -21,9 +27,9 @@ class SosButton extends StatelessWidget {
       width: size,
       height: size,
       child: FloatingActionButton(
-        onPressed: _callEmergency,
-        backgroundColor: const Color(0xFFFF4C4C), // Red100 equivalente
-        foregroundColor: Colors.white,             // StandardWhite
+        onPressed: () => _callEmergency(context),
+        backgroundColor: const Color(0xFFFF4C4C),
+        foregroundColor: Colors.white,
         child: const Text(
           'SOS',
           style: TextStyle(fontWeight: FontWeight.bold),

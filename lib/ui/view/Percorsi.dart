@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:url_launcher/url_launcher.dart';
+import 'package:stepontrackflutter/ui/view/MyTopAppBar.dart';
+import 'package:stepontrackflutter/ui/view/MyBottomNavigationBar.dart';
+import 'SOSButton.dart';
 
 class Percorso {
   final String id;
@@ -8,7 +9,6 @@ class Percorso {
   Percorso({required this.id, required this.nome});
 }
 
-// Widget che rappresenta la card di un percorso
 class PercorsoCard extends StatelessWidget {
   final Percorso percorso;
   final VoidCallback onTap;
@@ -26,22 +26,6 @@ class PercorsoCard extends StatelessWidget {
   }
 }
 
-// Bottone SOS
-class SosButton extends StatelessWidget {
-  const SosButton({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return FloatingActionButton(
-      onPressed: () {
-        // Logica SOS
-      },
-      backgroundColor: Colors.red,
-      child: const Icon(Icons.warning),
-    );
-  }
-}
-
 class SearchScreen extends StatefulWidget {
   final List<Percorso> percorsi;
 
@@ -53,70 +37,111 @@ class SearchScreen extends StatefulWidget {
 
 class _SearchScreenState extends State<SearchScreen> {
   String query = '';
+  int currentIndex = 1; // Percorsi
+
+  void _onTap(int index) {
+    if (index == currentIndex) return;
+    setState(() => currentIndex = index);
+
+    switch (index) {
+      case 0:
+        Navigator.pushReplacementNamed(context, '/home');
+        break;
+      case 1:
+        Navigator.pushReplacementNamed(context, '/percorsi');
+        break;
+      case 2:
+        Navigator.pushReplacementNamed(context, '/classifiche');
+        break;
+      case 3:
+        Navigator.pushReplacementNamed(context, '/profilo');
+        break;
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
-    // Filtra i percorsi in base alla query
     final filteredResults = widget.percorsi
         .where((p) => p.nome.toLowerCase().contains(query.toLowerCase()))
         .toList();
 
-    return Scaffold(
-      appBar: AppBar(
-        title: const Text("Cerca Percorso"),
-        backgroundColor: Colors.green,
-      ),
-      body: Padding(
-        padding: const EdgeInsets.all(16.0),
-        child: Column(
+    return WillPopScope(
+      onWillPop: () async {
+        // Se vuoi tornare alla Home invece di uscire dall'app:
+        Navigator.pushReplacementNamed(context, '/home');
+        return false; // blocca uscita dall'app
+      },
+      child: Scaffold(
+        appBar: const MyTopBar(title: "Percorsi"),
+        body: Stack(
           children: [
-            // Barra di ricerca
-            TextField(
-              decoration: InputDecoration(
-                labelText: "Cerca Percorso...",
-                prefixIcon: const Icon(Icons.search),
-                suffixIcon: query.isNotEmpty
-                    ? IconButton(
-                  icon: const Icon(Icons.close),
-                  onPressed: () {
-                    setState(() {
-                      query = '';
-                    });
-                  },
-                )
-                    : null,
-                border: const OutlineInputBorder(),
-              ),
-              onChanged: (value) {
-                setState(() {
-                  query = value;
-                });
-              },
-            ),
-            const SizedBox(height: 16),
-
-            // Lista dei percorsi filtrati
-            Expanded(
-              child: ListView.separated(
-                itemCount: filteredResults.length,
-                separatorBuilder: (_, __) => const SizedBox(height: 12),
-                itemBuilder: (context, index) {
-                  final percorso = filteredResults[index];
-                  return PercorsoCard(
-                    percorso: percorso,
-                    onTap: () {
-                      // Logica navigazione verso dettagli percorso
+            Padding(
+              padding: const EdgeInsets.all(16.0),
+              child: Column(
+                children: [
+                  TextField(
+                    decoration: InputDecoration(
+                      labelText: "Cerca Percorso...",
+                      prefixIcon: const Icon(Icons.search),
+                      suffixIcon: query.isNotEmpty
+                          ? IconButton(
+                        icon: const Icon(Icons.close),
+                        onPressed: () {
+                          setState(() {
+                            query = '';
+                          });
+                        },
+                      )
+                          : null,
+                      border: const OutlineInputBorder(),
+                    ),
+                    onChanged: (value) {
+                      setState(() {
+                        query = value;
+                      });
                     },
-                  );
-                },
+                  ),
+                  const SizedBox(height: 16),
+                  Expanded(
+                    child: ListView.separated(
+                      itemCount: filteredResults.length,
+                      separatorBuilder: (_, __) => const SizedBox(height: 12),
+                      itemBuilder: (context, index) {
+                        final percorso = filteredResults[index];
+                        return PercorsoCard(
+                          percorso: percorso,
+                          onTap: () {
+                            // Logica navigazione verso dettagli percorso
+                          },
+                        );
+                      },
+                    ),
+                  ),
+                ],
               ),
+            ),
+
+            // Bottone SOS in basso a destra
+            const Positioned(
+              bottom: 20,
+              right: 20,
+              child: SosButton(size: 65),
             ),
           ],
         ),
-      ),
 
-      // Bottone SOS in basso a destra
-      floatingActionButton: const SosButton(),
+        floatingActionButton: FloatingActionButton(
+          onPressed: () => _onTap(2), // apri classifiche
+          backgroundColor: Colors.yellow[700],
+          child: const Icon(Icons.add, size: 35),
+        ),
+        floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
+        bottomNavigationBar: MyBottomNavigationBar(
+          currentIndex: currentIndex,
+          onTap: _onTap,
+          onFabTap: () => _onTap(2),
+        ),
+      ),
     );
   }
 }

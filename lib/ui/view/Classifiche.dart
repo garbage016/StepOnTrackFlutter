@@ -28,17 +28,26 @@ class ClassificheScreen extends StatelessWidget {
     return Scaffold(
       appBar: MyTopBar(title: "Classifiche"),
       bottomNavigationBar: MyBottomNavigationBar(
-        currentIndex: 0, // indice della scheda attiva
+        currentIndex: 2, // Classifiche
         onTap: (index) {
-          // logica di navigazione quando si clicca una voce
-          print("Hai cliccato $index");
+          if (index == 2) return; // siamo già qui
+          switch (index) {
+            case 0:
+              Navigator.pushReplacementNamed(context, '/home');
+              break;
+            case 1:
+              Navigator.pushReplacementNamed(context, '/percorsi');
+              break;
+            case 3:
+              Navigator.pushReplacementNamed(context, '/profilo');
+              break;
+          }
         },
         onFabTap: () {
-          // logica quando si clicca il FAB
-          print("FAB cliccato");
+          // puoi fare niente o aprire creaPercorso
+          Navigator.pushNamed(context, '/creaPercorso');
         },
       ),
-
       body: SingleChildScrollView(
         padding: const EdgeInsets.all(16.0),
         child: Column(

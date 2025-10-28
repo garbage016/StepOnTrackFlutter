@@ -116,13 +116,24 @@ void main() {
   runApp(FirebaseInitializationWrapper());
 }*/
 import 'package:flutter/material.dart';
-import 'AppNavigation.dart'; // importa il file dove hai AppNavigation
-import 'ui/view/Home.dart'; // importa la schermata Home
+import 'package:stepontrackflutter/viewModels/ClassificheViewModel.dart';
+import 'AppNavigation.dart';
+import 'package:provider/provider.dart';
+import 'package:firebase_core/firebase_core.dart';
 
-
-void main() {
+void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  runApp(const AppTestWrapper());
+  await Firebase.initializeApp();
+
+  runApp(
+    MultiProvider(
+      providers: [
+        ChangeNotifierProvider(create: (_) => ClassificheViewModel()),
+        // altri provider se servono
+      ],
+      child: const AppTestWrapper(),
+    ),
+  );
 }
 
 class AppTestWrapper extends StatelessWidget {
@@ -130,11 +141,10 @@ class AppTestWrapper extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    // avvio dalla home, bypassando il login e Firebase
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       title: 'StepOnTrack (Test Mode)',
-      home: const HomeScreen(), // parte direttamente dalla home
+      home: const AppNavigation(),
     );
   }
 }
