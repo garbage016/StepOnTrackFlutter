@@ -76,12 +76,11 @@ class AppNavigation extends StatelessWidget {
               builder: (context) => DettaglioPercorsoScreen(percorsoId: id),
             );
 
-          /*case 'mappaSvolgimento':
+          case 'mappaSvolgimento':
             final id = uri.pathSegments.length > 1 ? uri.pathSegments[1] : '';
             return MaterialPageRoute(
-              builder: (context) => MappaSeguiPercorsoScreen(percorsoId: id),
-            );*/
-
+              builder: (context) => MappaPercorsoScreen(percorsoId: id),
+            );
           default:
             return null;
         }

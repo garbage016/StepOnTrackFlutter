@@ -4,14 +4,10 @@
     <option name="autoReloadType" value="NONE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="6c614911-17a6-4a5f-855c-dc524559656f" name="Changes" comment="login e risolti bug firebase">
+    <list default="true" id="6c614911-17a6-4a5f-855c-dc524559656f" name="Changes" comment="dettagli percorsi e ricerca">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/lib/AppNavigation.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/AppNavigation.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/models/percorso.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/models/percorso.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/ui/view/DettaglioPercorso.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/ui/view/DettaglioPercorso.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/ui/view/Percorsi.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/ui/view/Percorsi.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/ui/view/mappa/Mappa.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/ui/view/mappa/Mappa.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/viewModels/RicercaViewModel.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/viewModels/RicercaViewModel.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/ui/view/mappa/MappaSeguiPercorso.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/ui/view/mappa/MappaSeguiPercorso.dart" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -171,7 +167,15 @@
       <option name="project" value="LOCAL" />
       <updated>1761651479143</updated>
     </task>
-    <option name="localTasksCounter" value="12" />
+    <task id="LOCAL-00012" summary="dettagli percorsi e ricerca">
+      <option name="closed" value="true" />
+      <created>1761668813436</created>
+      <option name="number" value="00012" />
+      <option name="presentableId" value="LOCAL-00012" />
+      <option name="project" value="LOCAL" />
+      <updated>1761668813436</updated>
+    </task>
+    <option name="localTasksCounter" value="13" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -193,6 +197,7 @@
     <MESSAGE value="modifica grafica, rimosso firebase per errori" />
     <MESSAGE value="senza firebase, grafica funzionante base" />
     <MESSAGE value="login e risolti bug firebase" />
-    <option name="LAST_COMMIT_MESSAGE" value="login e risolti bug firebase" />
+    <MESSAGE value="dettagli percorsi e ricerca" />
+    <option name="LAST_COMMIT_MESSAGE" value="dettagli percorsi e ricerca" />
   </component>
 </project>
