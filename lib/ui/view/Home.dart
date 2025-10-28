@@ -1,7 +1,10 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:stepontrackflutter/ui/view/MyTopAppBar.dart';
 import 'package:stepontrackflutter/ui/view/MyBottomNavigationBar.dart';
 import 'package:url_launcher/url_launcher.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+
 
 import 'Crea.dart';
 import 'SOSButton.dart';
@@ -9,12 +12,49 @@ import 'SOSButton.dart';
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
 
+
   @override
   State<HomeScreen> createState() => _HomeScreenState();
 }
 
 class _HomeScreenState extends State<HomeScreen> {
   int currentIndex = 0;
+  String? username;
+
+  @override
+  void initState() {
+    super.initState();
+    _loadUsername();
+  }
+
+  Future<void> _loadUsername() async {
+    try {
+      User? user = FirebaseAuth.instance.currentUser;
+      if (user == null) return;
+
+      final query = await FirebaseFirestore.instance
+          .collection('Utente')
+          .where('email', isEqualTo: user.email)
+          .limit(1)
+          .get();
+
+      if (query.docs.isNotEmpty) {
+        setState(() {
+          username = query.docs.first['username'] ?? "SenzaNome";
+        });
+      } else {
+        setState(() {
+          username = "UtenteErr1"; // Nessun documento trovato
+        });
+      }
+    } catch (e) {
+      print("Errore recupero username: $e");
+      setState(() {
+        username = "Utente"; // Errore generico
+      });
+    }
+}
+
 
   void _onTap(int index) {
     if (index == currentIndex) return;
@@ -58,7 +98,7 @@ class _HomeScreenState extends State<HomeScreen> {
               children: [
                 const SizedBox(height: 10),
                 Text(
-                  "Bentrovato Marco!",
+                  "Bentrovato ${username ?? 'Utente'}!",
                   style: Theme.of(context).textTheme.headlineMedium,
                 ),
                 const SizedBox(height: 30),
@@ -82,8 +122,17 @@ class _HomeScreenState extends State<HomeScreen> {
                 ElevatedButton(
                   onPressed: () async {
                     final url = Uri.parse("https://www.3bmeteo.com");
+
                     if (await canLaunchUrl(url)) {
-                      await launchUrl(url);
+                      await launchUrl(
+                        url,
+                        mode: LaunchMode.externalApplication, //forza l’apertura nel browser
+                      );
+                    } else {
+                      debugPrint("Impossibile aprire l’URL: $url");
+                      ScaffoldMessenger.of(context).showSnackBar(
+                        const SnackBar(content: Text("Impossibile aprire il link.")),
+                      );
                     }
                   },
                   style: ElevatedButton.styleFrom(
@@ -92,9 +141,12 @@ class _HomeScreenState extends State<HomeScreen> {
                       borderRadius: BorderRadius.circular(12),
                     ),
                   ),
-                  child: const Text("Vai su 3B Meteo",
-                      style: TextStyle(color: Colors.black)),
-                ),
+                  child: const Text(
+                    "Vai su 3B Meteo",
+                    style: TextStyle(color: Colors.black),
+                  ),
+                )
+                ,
                 const SizedBox(height: 25),
 
                 const Text("Il luogo del giorno è...",

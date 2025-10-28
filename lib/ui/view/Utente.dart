@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:provider/provider.dart';
 import '../../viewModels/AuthViewModel.dart';
 import 'MyTopAppBar.dart';
@@ -14,36 +16,59 @@ class GestioneProfiloScreen extends StatefulWidget {
 
 class _GestioneProfiloScreenState extends State<GestioneProfiloScreen> {
   bool schermoAcceso = true;
+  bool loading = true;
 
-  // Dati dummy per esempio
-  final utente = {
-    'nome': 'Mario',
-    'cognome': 'Rossi',
-    'username': 'mario.rossi',
-    'dataCreazione': DateTime(2022, 1, 15)
-  };
+  String nome = '';
+  String cognome = '';
+  String username = '';
+  DateTime? dataCreazione;
 
-  void _showLogoutDialog() {
-    showDialog(
-      context: context,
-      builder: (_) => AlertDialog(
-        title: const Text('Conferma logout'),
-        content: const Text('Sei sicuro di voler uscire dall\'app?'),
-        actions: [
-          TextButton(
-            onPressed: () {
-              Navigator.pop(context);
-              // esegui logout e naviga a login
-            },
-            child: const Text('Esci', style: TextStyle(color: Colors.orange)),
-          ),
-          TextButton(
-            onPressed: () => Navigator.pop(context),
-            child: const Text('Annulla', style: TextStyle(color: Colors.black)),
-          ),
-        ],
-      ),
-    );
+  @override
+  void initState() {
+    super.initState();
+    _loadUserData();
+  }
+
+  Future<void> _loadUserData() async {
+    try {
+      User? user = FirebaseAuth.instance.currentUser;
+      if (user == null || user.email == null) {
+        setState(() {
+          username = "Nessun utente loggato";
+          loading = false;
+        });
+        return;
+      }
+      final query = await FirebaseFirestore.instance
+          .collection('Utente')
+          .where('email', isEqualTo: user.email)
+          .limit(1)
+          .get();
+
+      if (query.docs.isNotEmpty) {
+        final data = query.docs.first.data();
+        setState(() {
+          nome = data['nome'] ?? '';
+          cognome = data['cognome'] ?? '';
+          username = data['username'] ?? 'Sconosciuto';
+          dataCreazione = (data['dataCreazione'] is Timestamp)
+              ? (data['dataCreazione'] as Timestamp).toDate()
+              : null;
+          loading = false;
+        });
+      } else {
+        setState(() {
+          username = 'Utente non trovato';
+          loading = false;
+        });
+      }
+    } catch (e) {
+      print("Errore caricamento profilo: $e");
+      setState(() {
+        username = 'Errore caricamento';
+        loading = false;
+      });
+    }
   }
 
   void _onTapBottomNav(int index) {
@@ -58,46 +83,50 @@ class _GestioneProfiloScreenState extends State<GestioneProfiloScreen> {
         Navigator.pushReplacementNamed(context, '/classifiche');
         break;
       case 3:
-      // siamo già qui
         break;
     }
   }
 
   @override
   Widget build(BuildContext context) {
-    String formattedDate =
-    DateFormat('dd/MM/yyyy').format(utente['dataCreazione'] as DateTime);
-
     return Scaffold(
       appBar: const MyTopBar(title: 'Account'),
       bottomNavigationBar: MyBottomNavigationBar(
-        currentIndex: 3, // Profilo
+        currentIndex: 3,
         onTap: _onTapBottomNav,
-        onFabTap: () {
-          Navigator.pushNamed(context, '/creaPercorso'); // se vuoi
-        },
+        onFabTap: () => Navigator.pushNamed(context, '/creaPercorso'),
       ),
-      body: SingleChildScrollView(
+      body: loading
+          ? const Center(child: CircularProgressIndicator(color: Colors.orange))
+          : SingleChildScrollView(
         padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 30),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            // Info profilo
             Row(
               children: [
-                const Icon(Icons.account_circle, size: 52, color: Colors.orange),
+                const Icon(Icons.account_circle,
+                    size: 52, color: Colors.orange),
                 const SizedBox(width: 16),
                 Expanded(
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Text('${utente['nome']} ${utente['cognome']}',
-                          style: const TextStyle(
-                              fontSize: 20, fontWeight: FontWeight.bold, color: Colors.orange)),
-                      Text(utente['username'] as String,
+                      Text(
+                        "$nome $cognome",
+                        style: const TextStyle(
+                          fontSize: 20,
+                          fontWeight: FontWeight.bold,
+                          color: Colors.orange,
+                        ),
+                      ),
+                      Text(username,
                           style: const TextStyle(color: Colors.orange)),
-                      Text('Membro dal: $formattedDate',
-                          style: const TextStyle(color: Colors.orange)),
+                      if (dataCreazione != null)
+                        Text(
+                          'Membro dal: ${DateFormat('dd/MM/yyyy').format(dataCreazione!)}',
+                          style: const TextStyle(color: Colors.orange),
+                        ),
                     ],
                   ),
                 ),
@@ -112,39 +141,29 @@ class _GestioneProfiloScreenState extends State<GestioneProfiloScreen> {
             const SizedBox(height: 40),
             const Divider(),
 
-            // Percorsi Preferiti
             ListTile(
               title: const Text('Percorsi Preferiti'),
-              onTap: () {
-                // Naviga a preferiti
-              },
+              onTap: () {},
             ),
             const Divider(),
 
-            // I miei percorsi
             ListTile(
               title: const Text('I miei percorsi'),
-              onTap: () {
-                // Naviga ai miei percorsi
-              },
+              onTap: () {},
             ),
             const Divider(),
 
-            // Switch schermo acceso
             SwitchListTile(
-              title: const Text('Tieni acceso lo schermo durante la registrazione'),
+              title: const Text(
+                  'Tieni acceso lo schermo durante la registrazione'),
               value: schermoAcceso,
-              onChanged: (value) {
-                setState(() {
-                  schermoAcceso = value;
-                });
-              },
+              onChanged: (value) =>
+                  setState(() => schermoAcceso = value),
               activeColor: Colors.white,
               activeTrackColor: Colors.green.withOpacity(0.5),
             ),
             const Divider(),
 
-            // Logout
             ListTile(
               title: const Text('Esci'),
               onTap: () async {
@@ -152,7 +171,8 @@ class _GestioneProfiloScreenState extends State<GestioneProfiloScreen> {
                 await authVM.logout();
 
                 if (!mounted) return;
-                Navigator.pushNamedAndRemoveUntil(context, '/login', (route) => false);
+                Navigator.pushNamedAndRemoveUntil(
+                    context, '/login', (route) => false);
               },
             ),
             const Divider(),
