@@ -4,10 +4,8 @@
     <option name="autoReloadType" value="NONE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="6c614911-17a6-4a5f-855c-dc524559656f" name="Changes" comment="disegno percorsi su mappa">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/ui/view/Home.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/ui/view/Home.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/ui/view/Utente.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/ui/view/Utente.dart" afterDir="false" />
+    <list default="true" id="6c614911-17a6-4a5f-855c-dc524559656f" name="Changes" comment="ora scrive nomi su home e profilo">
+      <change beforePath="$PROJECT_DIR$/lib/ui/view/Login.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/ui/view/Login.dart" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -183,7 +181,15 @@
       <option name="project" value="LOCAL" />
       <updated>1761670470328</updated>
     </task>
-    <option name="localTasksCounter" value="14" />
+    <task id="LOCAL-00014" summary="ora scrive nomi su home e profilo">
+      <option name="closed" value="true" />
+      <created>1761671714301</created>
+      <option name="number" value="00014" />
+      <option name="presentableId" value="LOCAL-00014" />
+      <option name="project" value="LOCAL" />
+      <updated>1761671714301</updated>
+    </task>
+    <option name="localTasksCounter" value="15" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -207,6 +213,7 @@
     <MESSAGE value="login e risolti bug firebase" />
     <MESSAGE value="dettagli percorsi e ricerca" />
     <MESSAGE value="disegno percorsi su mappa" />
-    <option name="LAST_COMMIT_MESSAGE" value="disegno percorsi su mappa" />
+    <MESSAGE value="ora scrive nomi su home e profilo" />
+    <option name="LAST_COMMIT_MESSAGE" value="ora scrive nomi su home e profilo" />
   </component>
 </project>

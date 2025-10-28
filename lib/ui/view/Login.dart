@@ -1,12 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-
 import 'Home.dart';
 import 'Register.dart';
 
 class LoginScreen extends StatefulWidget {
-  const LoginScreen({super.key, required this.onRegisterClick, required this.onLoginSuccess});
+  const LoginScreen({
+    super.key,
+    required this.onRegisterClick,
+    required this.onLoginSuccess,
+  });
+
   final VoidCallback onRegisterClick;
   final VoidCallback onLoginSuccess;
 
@@ -20,6 +24,13 @@ class _LoginScreenState extends State<LoginScreen> {
   bool _loading = false;
   bool _rememberMe = false;
   String? _errorMessage;
+
+  // 🎨 COLORI DAL TEMA COMPOSE
+  final Color arancioSchermata = const Color(0xFFFFD6A5);
+  final Color rossoArancio = const Color(0xFFFF5C39);
+  final Color rossoArancio2 = const Color(0xFFFF7043);
+  final Color gialloLogo = const Color(0xFFFFE066);
+  final Color verdeLogo = const Color(0xFF66BB6A);
 
   @override
   void initState() {
@@ -44,8 +55,10 @@ class _LoginScreenState extends State<LoginScreen> {
     });
 
     try {
-      final userCredential = await FirebaseAuth.instance
-          .signInWithEmailAndPassword(email: email, password: password);
+      await FirebaseAuth.instance.signInWithEmailAndPassword(
+        email: email,
+        password: password,
+      );
 
       if (remember) {
         final prefs = await SharedPreferences.getInstance();
@@ -69,91 +82,163 @@ class _LoginScreenState extends State<LoginScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final gradient = LinearGradient(
+      begin: Alignment.topCenter,
+      end: Alignment.bottomCenter,
+      colors: [arancioSchermata, Colors.white],
+    );
+
     return Scaffold(
-      body: _loading
-          ? const Center(child: CircularProgressIndicator())
-          : Padding(
-        padding: const EdgeInsets.all(24.0),
+      body: Container(
+        decoration: BoxDecoration(gradient: gradient),
         child: Center(
           child: SingleChildScrollView(
-            child: Column(
+            padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 32),
+            child: _loading
+                ? const CircularProgressIndicator(color: Colors.orange)
+                : Column(
+              mainAxisAlignment: MainAxisAlignment.center,
               children: [
+                // Logo
                 SizedBox(
                   height: 130,
                   width: 130,
                   child: Image.asset('assets/mylogo.png'),
                 ),
-                const SizedBox(height: 20),
-                const Text(
-                  'StepOnTrack',
-                  style: TextStyle(fontSize: 36, fontWeight: FontWeight.bold),
+                const SizedBox(height: 16),
+                Text(
+                  'Benvenuto in',
+                  style: TextStyle(
+                    fontSize: 24,
+                    color: rossoArancio2,
+                    fontWeight: FontWeight.w500,
+                  ),
                 ),
-                const SizedBox(height: 40),
+                const SizedBox(height: 8),
+                ShaderMask(
+                  shaderCallback: (bounds) => LinearGradient(
+                    colors: [rossoArancio, gialloLogo, verdeLogo],
+                  ).createShader(bounds),
+                  child: const Text(
+                    'StepOnTrack',
+                    style: TextStyle(
+                      fontSize: 36,
+                      fontWeight: FontWeight.bold,
+                      color: Colors.white,
+                    ),
+                  ),
+                ),
+                const SizedBox(height: 45),
+
+                // Email
                 TextField(
                   controller: _emailController,
-                  decoration: const InputDecoration(
+                  decoration: InputDecoration(
                     labelText: 'Email',
-                    border: OutlineInputBorder(),
+                    labelStyle: TextStyle(color: rossoArancio),
+                    focusedBorder: OutlineInputBorder(
+                      borderSide: BorderSide(color: rossoArancio, width: 2),
+                    ),
+                    border: const OutlineInputBorder(),
                   ),
                 ),
                 const SizedBox(height: 10),
+
+                // Password
                 TextField(
                   controller: _passwordController,
                   obscureText: true,
-                  decoration: const InputDecoration(
+                  decoration: InputDecoration(
                     labelText: 'Password',
-                    border: OutlineInputBorder(),
+                    labelStyle: TextStyle(color: rossoArancio),
+                    focusedBorder: OutlineInputBorder(
+                      borderSide: BorderSide(color: rossoArancio, width: 2),
+                    ),
+                    border: const OutlineInputBorder(),
                   ),
                 ),
+                const SizedBox(height: 5),
+
+                // Remember me
                 Row(
                   children: [
                     Checkbox(
                       value: _rememberMe,
-                      onChanged: (val) => setState(() => _rememberMe = val ?? false),
+                      onChanged: (val) =>
+                          setState(() => _rememberMe = val ?? false),
+                      activeColor: rossoArancio,
                     ),
-                    const Text("Remember me"),
+                    const Text("Ricordami"),
                   ],
                 ),
-                const SizedBox(height: 20),
+                const SizedBox(height: 16),
+
+                // Login button
                 SizedBox(
-                  width: double.infinity,
+                  width: 250,
                   height: 50,
                   child: ElevatedButton(
+                    style: ElevatedButton.styleFrom(
+                      backgroundColor: rossoArancio,
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(12),
+                      ),
+                    ),
                     onPressed: () => _login(
                       _emailController.text.trim(),
                       _passwordController.text.trim(),
                       remember: _rememberMe,
                     ),
-                    child: const Text('Login'),
+                    child: const Text(
+                      'Login',
+                      style: TextStyle(fontSize: 18, color: Colors.white),
+                    ),
                   ),
                 ),
+
                 if (_errorMessage != null) ...[
                   const SizedBox(height: 12),
-                  Text(_errorMessage!, style: const TextStyle(color: Colors.red)),
+                  Text(
+                    _errorMessage!,
+                    style: const TextStyle(color: Colors.red),
+                  ),
                 ],
-                const SizedBox(height: 20),
-                TextButton(
-                  onPressed: () {
+
+                const SizedBox(height: 30),
+                Divider(color: rossoArancio2, thickness: 1),
+                const SizedBox(height: 28),
+
+                Text(
+                  "Non hai un account?",
+                  style: TextStyle(color: rossoArancio, fontSize: 16),
+                ),
+                GestureDetector(
+                  onTap: () {
                     Navigator.push(
                       context,
                       MaterialPageRoute(
                         builder: (_) => RegistrationScreen(
-                          onBackClick: () {
-                            Navigator.pop(context); // torna indietro alla LoginScreen
-                          },
+                          onBackClick: () => Navigator.pop(context),
                           onRegisterSuccess: () {
                             Navigator.pushReplacement(
                               context,
-                              MaterialPageRoute(builder: (_) => const HomeScreen()),
+                              MaterialPageRoute(
+                                  builder: (_) => const HomeScreen()),
                             );
                           },
                         ),
                       ),
                     );
                   },
-                  child: const Text("Non hai un account? Registrati"),
+                  child: Text(
+                    "Registrati",
+                    style: TextStyle(
+                      color: rossoArancio,
+                      fontSize: 16,
+                      decoration: TextDecoration.underline,
+                    ),
+                  ),
                 ),
-
               ],
             ),
           ),

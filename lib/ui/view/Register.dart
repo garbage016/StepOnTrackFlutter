@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import '../../repository/AuthRepository.dart';
+import '../theme/Color.dart';
 
 class RegistrationScreen extends StatefulWidget {
   final VoidCallback onBackClick;
@@ -100,11 +101,15 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: standardWhite,
       appBar: AppBar(
         title: const Text('Registrazione'),
+        backgroundColor: arancioSchermata,
+        foregroundColor: standardWhite,
         leading: IconButton(
           icon: const Icon(Icons.arrow_back),
           onPressed: widget.onBackClick,
+          color: standardWhite,
         ),
       ),
       body: SingleChildScrollView(
@@ -118,6 +123,13 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                 controller: usernameController,
                 decoration: InputDecoration(
                   labelText: 'Username',
+                  labelStyle: TextStyle(color: arancioSchermata),
+                  enabledBorder: OutlineInputBorder(
+                    borderSide: BorderSide(color: arancioSchermata),
+                  ),
+                  focusedBorder: OutlineInputBorder(
+                    borderSide: BorderSide(color: rossoArancio, width: 2),
+                  ),
                   errorText: usernameDisponibile ? null : usernameErrore,
                 ),
                 validator: (value) {
@@ -135,7 +147,16 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
               // Nome
               TextFormField(
                 controller: nomeController,
-                decoration: const InputDecoration(labelText: 'Nome'),
+                decoration: InputDecoration(
+                  labelText: 'Nome',
+                  labelStyle: TextStyle(color: arancioSchermata),
+                  enabledBorder: OutlineInputBorder(
+                    borderSide: BorderSide(color: arancioSchermata),
+                  ),
+                  focusedBorder: OutlineInputBorder(
+                    borderSide: BorderSide(color: rossoArancio, width: 2),
+                  ),
+                ),
                 validator: (value) {
                   if (value == null || value.trim().isEmpty) {
                     return 'Inserisci nome';
@@ -151,7 +172,16 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
               // Cognome
               TextFormField(
                 controller: cognomeController,
-                decoration: const InputDecoration(labelText: 'Cognome'),
+                decoration: InputDecoration(
+                  labelText: 'Cognome',
+                  labelStyle: TextStyle(color: arancioSchermata),
+                  enabledBorder: OutlineInputBorder(
+                    borderSide: BorderSide(color: arancioSchermata),
+                  ),
+                  focusedBorder: OutlineInputBorder(
+                    borderSide: BorderSide(color: rossoArancio, width: 2),
+                  ),
+                ),
                 validator: (value) {
                   if (value == null || value.trim().isEmpty) {
                     return 'Inserisci cognome';
@@ -167,9 +197,16 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
               // Data di nascita
               TextFormField(
                 controller: birthDateController,
-                decoration: const InputDecoration(
+                decoration: InputDecoration(
                   labelText: 'Data di nascita',
                   hintText: 'gg/mm/aaaa',
+                  labelStyle: TextStyle(color: arancioSchermata),
+                  enabledBorder: OutlineInputBorder(
+                    borderSide: BorderSide(color: arancioSchermata),
+                  ),
+                  focusedBorder: OutlineInputBorder(
+                    borderSide: BorderSide(color: rossoArancio, width: 2),
+                  ),
                 ),
                 readOnly: true,
                 onTap: _selectBirthDate,
@@ -185,7 +222,16 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
               // Email
               TextFormField(
                 controller: emailController,
-                decoration: const InputDecoration(labelText: 'Email'),
+                decoration: InputDecoration(
+                  labelText: 'Email',
+                  labelStyle: TextStyle(color: arancioSchermata),
+                  enabledBorder: OutlineInputBorder(
+                    borderSide: BorderSide(color: arancioSchermata),
+                  ),
+                  focusedBorder: OutlineInputBorder(
+                    borderSide: BorderSide(color: rossoArancio, width: 2),
+                  ),
+                ),
                 validator: (value) {
                   if (value == null || value.isEmpty) return 'Inserisci email';
                   if (!value.contains('@') || !value.contains('.')) {
@@ -199,7 +245,16 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
               // Password
               TextFormField(
                 controller: passwordController,
-                decoration: const InputDecoration(labelText: 'Password'),
+                decoration: InputDecoration(
+                  labelText: 'Password',
+                  labelStyle: TextStyle(color: arancioSchermata),
+                  enabledBorder: OutlineInputBorder(
+                    borderSide: BorderSide(color: arancioSchermata),
+                  ),
+                  focusedBorder: OutlineInputBorder(
+                    borderSide: BorderSide(color: rossoArancio, width: 2),
+                  ),
+                ),
                 obscureText: true,
                 validator: (value) {
                   if (value == null || value.length < 6) {
@@ -212,10 +267,18 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
 
               // Bottone registrazione
               isLoading
-                  ? const CircularProgressIndicator()
-                  : ElevatedButton(
-                onPressed: _register,
-                child: const Text('Crea account'),
+                  ? const CircularProgressIndicator(color: rossoArancio)
+                  : SizedBox(
+                width: double.infinity,
+                child: ElevatedButton(
+                  onPressed: _register,
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: arancioSchermata,
+                    foregroundColor: standardWhite,
+                    padding: const EdgeInsets.symmetric(vertical: 16),
+                  ),
+                  child: const Text('Crea account'),
+                ),
               ),
             ],
           ),
