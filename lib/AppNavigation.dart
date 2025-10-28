@@ -68,7 +68,7 @@ class AppNavigation extends StatelessWidget {
             final durata = uri.pathSegments.length > 3 ? uri.pathSegments[3] : '';
             return MaterialPageRoute(
               builder: (context) => RiepilogoScreen(nome: nome, distanza: distanza, durata: durata),
-            );*/
+            );*////non implementato
 
           case 'dettaglio':
             final id = uri.pathSegments.length > 1 ? uri.pathSegments[1] : '';

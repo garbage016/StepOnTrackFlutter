@@ -25,7 +25,6 @@ class _LoginScreenState extends State<LoginScreen> {
   bool _rememberMe = false;
   String? _errorMessage;
 
-  // 🎨 COLORI DAL TEMA COMPOSE
   final Color arancioSchermata = const Color(0xFFFFD6A5);
   final Color rossoArancio = const Color(0xFFFF5C39);
   final Color rossoArancio2 = const Color(0xFFFF7043);

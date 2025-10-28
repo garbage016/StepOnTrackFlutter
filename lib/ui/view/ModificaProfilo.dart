@@ -44,29 +44,6 @@ class _ModificaProfiloScreenState extends State<ModificaProfiloScreen> {
     }
   }
 
-  Future<void> _updateProfile() async {
-    final user = auth.currentUser;
-    if (user == null) return;
-
-    final snapshot =
-    await firestore.collection('Utente').where('email', isEqualTo: user.email).get();
-
-    if (snapshot.docs.isNotEmpty) {
-      final docId = snapshot.docs.first.id;
-      await firestore.collection('Utente').doc(docId).update({
-        'nome': _nomeController.text,
-        'cognome': _cognomeController.text,
-        'dataNascita': _dataController.text,
-      });
-
-      if (mounted) {
-        ScaffoldMessenger.of(context).showSnackBar(
-          const SnackBar(content: Text('Profilo aggiornato!')),
-        );
-      }
-    }
-  }
-
   Future<void> _pickDate() async {
     final now = DateTime.now();
     final pickedDate = await showDatePicker(
@@ -132,11 +109,11 @@ class _ModificaProfiloScreenState extends State<ModificaProfiloScreen> {
                   icon: const Icon(Icons.cancel),
                   label: const Text('Annulla'),
                 ),
-                ElevatedButton.icon(
-                  onPressed: _updateProfile,
+                /*ElevatedButton.icon(
+                  onPressed: /*aggiorna profilo */{},
                   icon: const Icon(Icons.save),
                   label: const Text('Salva'),
-                ),
+                ),*/
               ],
             ),
           ],

@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:stepontrackflutter/models/percorso.dart';
-import 'package:stepontrackflutter/viewModels/PercorsoSvoltoViewModel.dart';
-import '../../models/PercorsoSvolto.dart';
 import '../../viewModels/PercorsoViewModel.dart';
 
 /// ------------------ PERCORSO CARD ------------------
@@ -129,67 +127,6 @@ class StepCard extends StatelessWidget {
   }
 }
 
-/// ------------------ PERCORSO SVOLTO CARD ------------------
-class PercorsoSvoltoCard extends StatelessWidget {
-  final PercorsoSvolto percorsoSvolto;
-  final PercorsoViewModel viewModel;
-  final VoidCallback onTap;
-
-  const PercorsoSvoltoCard({
-    super.key,
-    required this.percorsoSvolto,
-    required this.viewModel,
-    required this.onTap,
-  });
-
-  @override
-  Widget build(BuildContext context) {
-    final isPreferito = viewModel.percorsiPreferiti.contains(percorsoSvolto.idPercorso);
-
-    return InkWell(
-      onTap: onTap,
-      child: Container(
-        padding: const EdgeInsets.all(12),
-        decoration: BoxDecoration(
-          color: Colors.grey.withOpacity(0.2),
-          borderRadius: BorderRadius.circular(12),
-        ),
-        child: Row(
-          children: [
-            Container(
-              width: 48,
-              height: 48,
-              decoration: BoxDecoration(
-                color: Colors.black.withOpacity(0.1),
-                borderRadius: BorderRadius.circular(4),
-              ),
-              child: Icon(Icons.terrain, color: Colors.green),
-            ),
-            const SizedBox(width: 12),
-            Expanded(
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(percorsoSvolto.nomePercorso, style: Theme.of(context).textTheme.bodyLarge),
-                  Text("Tempo impiegato: ${percorsoSvolto.tempoImpiegato} min", style: Theme.of(context).textTheme.bodySmall),
-                  Text("Data: ${percorsoSvolto.dataSvolgimento}", style: Theme.of(context).textTheme.bodySmall?.copyWith(color: Colors.grey)),
-                ],
-              ),
-            ),
-            IconButton(
-              onPressed: () => viewModel.togglePreferito(percorsoSvolto.idPercorso),
-              icon: Icon(
-                isPreferito ? Icons.bookmark : Icons.bookmark_border,
-                color: isPreferito ? Colors.green : Colors.grey,
-              ),
-            ),
-          ],
-        ),
-      ),
-    );
-  }
-}
-
 /// ------------------ CLASSIFICA CARD ------------------
 class ClassificaCard extends StatelessWidget {
   final String titolo;
@@ -261,61 +198,6 @@ class ClassificaCard extends StatelessWidget {
           );
         }).toList(),
       ],
-    );
-  }
-}
-
-/// ------------------ PERCORSO PREFERITO CARD ------------------
-class PercorsoPreferitoCard extends StatelessWidget {
-  final Percorso percorso;
-  final PercorsoViewModel viewModel;
-  final VoidCallback onTap;
-
-  const PercorsoPreferitoCard({
-    super.key,
-    required this.percorso,
-    required this.viewModel,
-    required this.onTap,
-  });
-
-  @override
-  Widget build(BuildContext context) {
-    final isPreferito = viewModel.percorsiPreferiti.contains(percorso.id);
-
-    return InkWell(
-      onTap: onTap,
-      child: Container(
-        height: 100,
-        padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
-        decoration: BoxDecoration(
-          color: Colors.green.withOpacity(0.1),
-          borderRadius: BorderRadius.circular(12),
-        ),
-        child: Row(
-          children: [
-            Icon(Icons.terrain, size: 60, color: Colors.green),
-            const SizedBox(width: 20),
-            Expanded(
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(percorso.nome, style: Theme.of(context).textTheme.titleMedium),
-                  Text("Recensione: ${percorso.recensione.toStringAsFixed(1)}"),
-                  Text("Durata: ${percorso.durata} min"),
-                ],
-              ),
-            ),
-            IconButton(
-              onPressed: () => viewModel.togglePreferito(percorso.id),
-              icon: Icon(
-                isPreferito ? Icons.bookmark : Icons.bookmark_border,
-                color: isPreferito ? Colors.green : Colors.grey,
-              ),
-            ),
-          ],
-        ),
-      ),
     );
   }
 }

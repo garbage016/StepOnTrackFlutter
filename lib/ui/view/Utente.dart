@@ -133,6 +133,7 @@ class _GestioneProfiloScreenState extends State<GestioneProfiloScreen> {
                 IconButton(
                   onPressed: () {
                     // Naviga a modifica profilo
+                    Navigator.pushNamed(context, '/modificaProfilo');
                   },
                   icon: const Icon(Icons.edit, color: Colors.orange),
                 ),
