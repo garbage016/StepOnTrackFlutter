@@ -1,48 +1,36 @@
 import 'package:flutter/material.dart';
-import 'package:stepontrackflutter/ui/view/MyTopAppBar.dart';
-import 'package:stepontrackflutter/ui/view/MyBottomNavigationBar.dart';
+import 'package:provider/provider.dart';
+import '../../viewModels/RicercaViewModel.dart';
+import '../../models/percorso.dart';
 import 'SOSButton.dart';
+import 'MyTopAppBar.dart';
+import 'MyBottomNavigationBar.dart';
 
-class Percorso {
-  final String id;
-  final String nome;
-  Percorso({required this.id, required this.nome});
-}
-
-class PercorsoCard extends StatelessWidget {
-  final Percorso percorso;
-  final VoidCallback onTap;
-
-  const PercorsoCard({super.key, required this.percorso, required this.onTap});
+class SearchScreen extends StatelessWidget {
+  const SearchScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
-    return Card(
-      child: ListTile(
-        title: Text(percorso.nome),
-        onTap: onTap,
-      ),
+    return ChangeNotifierProvider(
+      create: (_) => RicercaViewModel(),
+      child: const _SearchScreenBody(),
     );
   }
 }
 
-class SearchScreen extends StatefulWidget {
-  final List<Percorso> percorsi;
-
-  const SearchScreen({super.key, required this.percorsi});
+class _SearchScreenBody extends StatefulWidget {
+  const _SearchScreenBody();
 
   @override
-  State<SearchScreen> createState() => _SearchScreenState();
+  State<_SearchScreenBody> createState() => _SearchScreenBodyState();
 }
 
-class _SearchScreenState extends State<SearchScreen> {
-  String query = '';
-  int currentIndex = 1; // Percorsi
+class _SearchScreenBodyState extends State<_SearchScreenBody> {
+  int currentIndex = 1;
 
   void _onTap(int index) {
     if (index == currentIndex) return;
     setState(() => currentIndex = index);
-
     switch (index) {
       case 0:
         Navigator.pushReplacementNamed(context, '/home');
@@ -61,58 +49,52 @@ class _SearchScreenState extends State<SearchScreen> {
 
   @override
   Widget build(BuildContext context) {
-    final filteredResults = widget.percorsi
-        .where((p) => p.nome.toLowerCase().contains(query.toLowerCase()))
-        .toList();
+    final viewModel = context.watch<RicercaViewModel>();
+    final results = viewModel.filteredResults;
 
     return WillPopScope(
       onWillPop: () async {
-        // Se vuoi tornare alla Home invece di uscire dall'app:
         Navigator.pushReplacementNamed(context, '/home');
-        return false; // blocca uscita dall'app
+        return false;
       },
       child: Scaffold(
         appBar: const MyTopBar(title: "Percorsi"),
         body: Stack(
           children: [
             Padding(
-              padding: const EdgeInsets.all(16.0),
+              padding: const EdgeInsets.all(16),
               child: Column(
                 children: [
                   TextField(
                     decoration: InputDecoration(
                       labelText: "Cerca Percorso...",
                       prefixIcon: const Icon(Icons.search),
-                      suffixIcon: query.isNotEmpty
+                      suffixIcon: viewModel.searchQuery.isNotEmpty
                           ? IconButton(
                         icon: const Icon(Icons.close),
-                        onPressed: () {
-                          setState(() {
-                            query = '';
-                          });
-                        },
+                        onPressed: () => viewModel.updateSearchQuery(''),
                       )
                           : null,
                       border: const OutlineInputBorder(),
                     ),
-                    onChanged: (value) {
-                      setState(() {
-                        query = value;
-                      });
-                    },
+                    onChanged: viewModel.updateSearchQuery,
                   ),
                   const SizedBox(height: 16),
                   Expanded(
                     child: ListView.separated(
-                      itemCount: filteredResults.length,
+                      itemCount: results.length,
                       separatorBuilder: (_, __) => const SizedBox(height: 12),
                       itemBuilder: (context, index) {
-                        final percorso = filteredResults[index];
-                        return PercorsoCard(
-                          percorso: percorso,
-                          onTap: () {
-                            // Logica navigazione verso dettagli percorso
-                          },
+                        final percorso = results[index];
+                        return Card(
+                          child: ListTile(
+                            title: Text(percorso.nome),
+                            subtitle: Text('Autore: ${percorso.autore}'),
+                            onTap: () {
+                              Navigator.pushNamed(context,'/dettaglio/${percorso.id}', // passiamo l'id del percorso
+                              );
+                            },
+                          ),
                         );
                       },
                     ),
@@ -120,8 +102,6 @@ class _SearchScreenState extends State<SearchScreen> {
                 ],
               ),
             ),
-
-            // Bottone SOS in basso a destra
             const Positioned(
               bottom: 20,
               right: 20,
@@ -129,9 +109,8 @@ class _SearchScreenState extends State<SearchScreen> {
             ),
           ],
         ),
-
         floatingActionButton: FloatingActionButton(
-          onPressed: () => _onTap(2), // apri classifiche
+          onPressed: () => _onTap(2),
           backgroundColor: Colors.yellow[700],
           child: const Icon(Icons.add, size: 35),
         ),

@@ -44,7 +44,7 @@ class AppNavigation extends StatelessWidget {
 
         '/register': (context) => RegistrationScreen(onBackClick: () {  }, onRegisterSuccess: () {  },),
         '/home': (context) => HomeScreen(),
-        '/percorsi': (context) => SearchScreen(percorsi: [],),
+        '/percorsi': (context) => SearchScreen(),
         '/profilo': (context) => GestioneProfiloScreen(),
         '/classifiche': (context) => ClassificheScreen(),
         '/creaPercorso': (context) => CreaPercorsoScreen(),

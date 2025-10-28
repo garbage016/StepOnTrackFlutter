@@ -3,6 +3,8 @@ import 'package:flutter_osm_plugin/flutter_osm_plugin.dart';
 import 'package:geolocator/geolocator.dart';
 import 'dart:async';
 
+import 'package:stepontrackflutter/ui/view/MyTopAppBar.dart';
+
 class MappaScreen extends StatefulWidget {
   const MappaScreen({super.key});
 
@@ -92,10 +94,7 @@ class _MappaScreenState extends State<MappaScreen> {
     bool isTracking = timer != null && timer!.isActive;
 
     return Scaffold(
-      appBar: AppBar(
-        title: const Text("StepOnTrack"),
-        backgroundColor: Colors.blueAccent,
-      ),
+      appBar: MyTopBar(title: "Mappa"),
       body: Stack(
         children: [
           // MAPPA: Usa il parametro osmOption

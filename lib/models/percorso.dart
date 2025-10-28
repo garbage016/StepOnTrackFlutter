@@ -48,7 +48,7 @@ class Percorso {
       mezzo: map['mezzo'] ?? '',
       durata: map['durata'],
       autore: map['autore'] ?? '',
-      timestampCreazione: map['timestampCreazione'],
+      timestampCreazione: map['timestampCreazione'] as Timestamp?,
       coordinate: (map['coordinate'] as List<dynamic>?)
           ?.map((e) => e as GeoPoint)
           .toList() ??
